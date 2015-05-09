@@ -1,8 +1,30 @@
 package play.api.libs.ws.ning.cache
 
 import com.ning.http.client._
-import play.api.libs.ws.ning.NingUtilities
+import play.core.utils.CaseInsensitiveOrdered
 
+import scala.collection.JavaConverters._
+import scala.collection.immutable.TreeMap
+
+/**
+ * Useful Ning header mapping.
+ */
+trait NingUtilities {
+
+  def ningHeadersToMap(headers: java.util.Map[String, java.util.Collection[String]]): Map[String, Seq[String]] =
+    mapAsScalaMapConverter(headers).asScala.map(e => e._1 -> e._2.asScala.toSeq).toMap
+
+  def ningHeadersToMap(headers: FluentCaseInsensitiveStringsMap): Map[String, Seq[String]] = {
+    val res = mapAsScalaMapConverter(headers).asScala.map(e => e._1 -> e._2.asScala.toSeq).toMap
+    //todo: wrap the case insensitive ning map instead of creating a new one (unless perhaps immutabilty is important)
+    TreeMap(res.toSeq: _*)(CaseInsensitiveOrdered)
+  }
+
+}
+
+/**
+ * Ning header debugging trait.
+ */
 trait NingDebug extends NingUtilities {
 
   def debug(cfg: AsyncHttpClientConfig): String = {
