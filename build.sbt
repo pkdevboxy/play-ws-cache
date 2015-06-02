@@ -23,7 +23,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-ws" % "2.4.0-SNAPSHOT",
+  "com.typesafe.play" %% "play-ws" % "2.4.0",
   "com.google.code.findbugs" % "jsr305" % "3.0.0", // required to suppress @NotNull compiler errors
   "com.typesafe.play" %% "cachecontrol" % "1.0.0",
   "com.typesafe.play" %% "play-specs2" % "2.4.0-SNAPSHOT" % "test"
